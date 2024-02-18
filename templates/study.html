@@ -116,12 +116,36 @@
             }
         ]
 
-        let currentQuestionIndex = 0;
+            let currentQuestionIndex = 0;
 
-        function checkAnswer() {
-            // Your checkAnswer function implementation here
-        }
+            function checkAnswer() {
+                // alert("checking answer");
+                const userAnswer = document.querySelector('input[type="text"]').value.toLowerCase().trim();
+                let currentQuestionIndex = currentQuestionIndex; // Add current question index
 
+                // Send the user's answer to the Flask server
+                fetch('/check_answer', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ userAnswer, currentQuestionIndex }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.result === 'success') {
+                        alert('Correct answer!');
+                        // Handle correct answer logic (e.g., change color, show success message)
+                    } else {
+                        alert('Wrong answer!');
+                        // Handle incorrect answer logic (e.g., change color, show failure message)
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+        
         function showNextQuestion() {
             // Clear any existing input fields
             document.getElementById("questionContainer").innerHTML = "";
@@ -173,8 +197,6 @@
     
      <h3>Start Studying!</h3>
      <div id="questionContainer"></div>
-
-     <p>{{questions}}</p>
 
      <button id="nextAnswerButton" onClick="checkAnswer()">Check Answer</button>
      <button id="nextQuestionButton" onClick="showNextQuestion()">Next Question</button>
