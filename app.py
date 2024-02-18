@@ -18,10 +18,21 @@ from haystack.pipelines import (
     RetrieverQuestionGenerationPipeline,
     QuestionAnswerGenerationPipeline,
 )
+import spacy
 from haystack.utils import launch_es, print_questions
 from subprocess import Popen, PIPE, STDOUT
+from gensim import corpora, models, similarities
+import jieba
+from flask_cors import CORS
+
+"""
+Google Colabs
+Spacy: https://colab.research.google.com/drive/1xqV5d6AyC5k1CEcfxl8UsE4l8cw6sVr_?usp=sharing
+Haystack: https://colab.research.google.com/drive/1rrqL1Smyw-efuss3e9HHquQlZBoqrLHG?usp=sharing
+"""
 
 app = Flask(__name__)
+CORS(app)
 
 if __name__ == '__main__':
     app.run(debug=True)
@@ -30,7 +41,6 @@ ALLOWED_EXTENSIONS = {'pdf'}
 UPLOAD_FOLDER = 'uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
-global_questions = {}
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -175,24 +185,30 @@ def about():
 @app.route("/study", methods=['POST'])
 def study():
     if request.method == "POST":
-        return render_template('study.html', questions = global_questions)
+        return render_template('study.html')
     return render_template('index.html') 
 
-
-def compare_answers(user_ans, correct_answer):
-    from gensim import corpora, models, similarities
-    import jieba
+@app.route("/check_answer", methods=['POST'])
+def compare_answers(str1, str2):
+  # Load the English NLP model
     
-    text = user_ans
-    keyword = correct_answer
-    dictionary = corpora.Dictionary(text)
-    feature_cnt = len(dictionary.token2id)
-    corpus = dictionary.doc2bow(text) #gets the dictionary and the words used. 
-    tfidf = models.TfidfModel(corpus) 
-    kw_vector = dictionary.doc2bow(jieba.lcut(keyword))
-    index = similarities.SparseMatrixSimilarity(tfidf[corpus], num_features = feature_cnt)
-    sim = index[tfidf[kw_vector]] #finds the similarity index between the user answer. 
-    if sim < 0.75:
-        return True
+    print("str1 = " , str1)
+    print("str2 = " , str2)
+
+    nlp = spacy.load("en_core_web_sm")
+
+  # Define two strings
+
+  # Process the strings with spaCy
+    doc1 = nlp(str1)
+    doc2 = nlp(str2)
+
+    # Compute semantic similarity
+    similarity_score = doc1.similarity(doc2)
+
+    print("SIMILARITY = " , similarity_score)
+
+    if similarity_score < 0.75:
+        return jsonify({"result": "success", "message": "Correct answer!"})
     else:
-        return False
+        return jsonify({"result": "failure", "message": "Wrong answer!"})
