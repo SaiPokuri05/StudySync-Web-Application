@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Answer Questions</title>
+    
+    <style>
+        
+    .a {
+        background-color: #474646;
+        list-style-type: none;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    #indent {
+      line-height: 2.0;
+      padding-left: 30px;
+      padding-right: 60px;
+    }
+
+    h1 {
+      font-family: "fantasy"
+    }
+    
+    
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      margin-left: 0%;
+      text-decoration: none;
+    }
+    
+    li a:hover:not(.active) {
+      background-color: #000000;
+    }
+    
+    .active {
+      background-color: rgb(93, 153, 231);
+      color: white;
+    }
+
+    body {
+      background-color: rgb(218, 233, 253);
+    }
+
+    button, form input {
+      background-color: rgb(93, 153, 231);
+      border: none;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+    
+    .text{
+      list-style-type: circle;
+      line-height: 2.0;
+    }
+    
+    .success{
+        color: green;
+        font-weight: bold;
+    }
+
+    .failure{
+        color: red;
+    }
+
+    #questionContainer {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    input[type="radio"] {
+        margin-left: 10px;
+    }
+    </style>
+</head>
+<body>
+    <script>
+      
+        const questions = [
+            {
+            question: "What is the capital of France?",
+            answers: ["Paris"]
+            },
+            {
+            question: "Which mountain range is found in France, offering opportunities for winter sports?",
+            answers: ["French Alps"]
+            },
+            
+            {
+            question: "What is the official currency of France?",
+            answers: ["Euro"]
+            },
+            {
+            question: "Which international film festival is held annually in France, attracting filmmakers from around the world?",
+            answers: ["Cannes Film festival"]
+            },
+            {
+            question: "What is the official language of France?",
+            answers: ["French"]
+            }
+        ]
+
+        let currentQuestionIndex = 0;
+
+        function checkAnswer() {
+            // Your checkAnswer function implementation here
+        }
+
+        function showNextQuestion() {
+            // Clear any existing input fields
+            document.getElementById("questionContainer").innerHTML = "";
+        
+            // Get the current question
+            const currentQuestion = questions[currentQuestionIndex];
+        
+            // Add the question to the page
+            const questionElement = document.createElement("h3");
+            questionElement.textContent = currentQuestion.question;
+            document.getElementById("questionContainer").appendChild(questionElement);
+        
+            // Add the input fields for answers to the page
+            currentQuestion.answers.forEach((answer, index) => {
+                // Create a label for the input field
+                const labelElement = document.createElement("label");
+                labelElement.textContent = `Answer: `;
+        
+                // Create the input field
+                const inputElement = document.createElement("input");
+                inputElement.type = "text";
+                inputElement.name = `answerInput${index}`;
+        
+                // If this is the correct answer, mark it as such
+                if (answer.correct) {
+                    inputElement.setAttribute("data-correct", "true");
+                }
+        
+                // Add the label and input field to the page
+                document.getElementById("questionContainer").appendChild(labelElement);
+                document.getElementById("questionContainer").appendChild(inputElement);
+            });
+        
+            // Go to the next question
+            currentQuestionIndex++;
+            if (currentQuestionIndex >= questions.length) {
+                // If there are no more questions, disable the next button
+                document.getElementById("nextQuestionButton").disabled = true;
+                alert('Congratulations! You have completed the quiz.');
+            }
+        }
+       
+    </script>
+    
+    <ul class ="a">
+        <li style= "float:left"><a href="/">Home</a></li>
+        <li style="float:right"><a class="active" href="/about">About</a></li>
+    </ul>
+    
+     <h3>Start Studying!</h3>
+     <div id="questionContainer"></div>
+
+     <p>{{questions}}</p>
+
+     <button id="nextAnswerButton" onClick="checkAnswer()">Check Answer</button>
+     <button id="nextQuestionButton" onClick="showNextQuestion()">Next Question</button>
+
+</body>
+</html>

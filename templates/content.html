@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Contents</title>
+    
+    <style>
+        
+    .a {
+        background-color: #474646;
+        list-style-type: none;
+        margin: 0;
+        overflow: hidden;
+    }
+
+    #indent {
+      line-height: 2.0;
+      padding-left: 30px;
+      padding-right: 60px;
+    }
+
+    h1 {
+      font-family: "fantasy"
+    }
+    
+    
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      margin-left: 0%;
+      text-decoration: none;
+    }
+    
+    li a:hover:not(.active) {
+      background-color: #000000;
+    }
+    
+    .active {
+      background-color: rgb(93, 153, 231);
+      color: white;
+    }
+
+    body {
+      background-color: rgb(218, 233, 253);
+    }
+
+    form button, form input {
+      background-color: rgb(93, 153, 231);
+      border: none;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+    
+    .text{
+      list-style-type: circle;
+      line-height: 2.0;
+    }
+    
+    .success{
+        color: green;
+    }
+</style>
+    
+  
+</head>
+<body>
+    <ul class ="a">
+        <li style= "float:left"><a href="/">Home</a></li>
+        <li style="float:right"><a class="active" href="/about">About</a></li>
+    </ul>
+    <h2 class="success"> File Successfully Uploaded! </h2>
+        
+    <form action="/study" content = {{contents}} method="post" enctype="multipart/form-data">
+        <button type="submit">Generate Questions</button>
+    </form>
+      <h2>Filename: {{ filename }}</h2>
+      <pre>{{ contents }}</pre>
+</body>
+</html>

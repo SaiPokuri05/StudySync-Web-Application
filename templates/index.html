@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>File Uploader</title>
+    </head>
+
+    <style>
+        
+      .a {
+          background-color: #474646;
+          list-style-type: none;
+          margin: 0;
+          overflow: hidden;
+      }
+    ul {
+      list-style-type: none;
+      margin: 0;
+      overflow: hidden;
+    }
+    #indent {
+      line-height: 2.0;
+      padding-left: 30px;
+      padding-right: 60px;
+    }
+    h1 {
+      font-family: "fantasy"
+    }
+    
+    li {
+      float: left;
+    }
+    
+    li a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      margin-left: 0%;
+      text-decoration: none;
+    }
+    
+    li a:hover:not(.active) {
+      background-color: #000000;
+    }
+    
+    .active {
+      background-color: rgb(93, 153, 231);
+      color: white;
+    }
+
+    body {
+      background-color: rgb(218, 233, 253);
+    }
+
+    form button, form input {
+      background-color: rgb(93, 153, 231);
+      border: none;
+      color: white;
+      padding: 10px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+    
+    .text{
+      list-style-type: circle;
+      line-height: 2.0;
+    }
+
+    .error {
+      color: red;
+    }
+    
+</style>
+
+<body>
+
+    <ul class ="a">
+        <li><a href="/">Home</a></li>
+        <li style="float:right"><a class="active" href="/about">About</a></li>
+    </ul>
+
+
+<div class="indent">
+
+
+<h1 style="font-family:fantasy">StudySync</h1>
+    
+<h3>Welcome to StudySync!</h3>
+
+<p>Hello! Introducing StudySync, an innovative online AI platform 
+  designed to streamline the study process by effortlessly transforming 
+  your handwritten or typed notes into a personalized study experience. 
+  Users can easily upload their notes onto the platform, where advanced 
+  algorithms analyze the content to generate customized questions and 
+  answers. This dynamic feature not only enhances retention but also 
+  promotes active learning, allowing users to quiz themselves on key 
+  concepts. StudySync adapts to individual learning styles, providing 
+  a tailored study session that optimizes comprehension and recall. 
+  With its user-friendly interface, StudySync empowers students to make 
+  the most of their study time, transforming static notes into an 
+  interactive and engaging learning tool. Say goodbye to traditional 
+  note review methods and embrace the future of personalized, efficient 
+  studying with StudySync!</p>
+</div>
+
+
+<h3>File Uploader</h3>
+
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".pdf" required>
+    <button type="submit">Upload</button>
+</form>
+
+<p class ="error"> {{error_message}} </p>
+
+</body>
+</html>
